@@ -48,7 +48,7 @@ fn get_cached_timestamp() -> Result<String, Box<Error>> {
 }
 
 fn get_cached_plan(timestamp: &str) -> Result<Vec<u8>, Box<Error>> {
-    let filename = format!("plan_{}.htm", timestamp);
+    let filename = format!("plan_{}.html", timestamp);
     let path = app_root(AppDataType::UserData, &APP_INFO)?.join(filename);
     let mut file = File::open(path)?;
     let mut buf: Vec<u8> = Vec::new();
@@ -72,7 +72,7 @@ fn get_new_plan() -> Result<Vec<u8>, Box<Error>> {
 fn save_new_plan(buf: &[u8]) -> Result<(), Box<Error>> {
     let timestamp = get_current_timestamp()?;
 
-    let filename = format!("plan_{}.htm", timestamp);
+    let filename = format!("plan_{}.html", timestamp);
     let path = app_root(AppDataType::UserData, &APP_INFO)?.join(filename);
     let print_path = path.to_string_lossy().to_string();
     let mut file = File::create(path)?;
