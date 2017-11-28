@@ -40,7 +40,7 @@ fn run() -> Result<(), Box<Error>> {
 }
 
 fn get_cached_timestamp() -> Result<String, Box<Error>> {
-    let path = app_root(AppDataType::UserConfig, &APP_INFO)?.join("timestamp");
+    let path = app_root(AppDataType::UserData, &APP_INFO)?.join("timestamp");
     let mut file = File::open(path)?;
     let mut buf = String::new();
     file.read_to_string(&mut buf)?;
@@ -78,7 +78,7 @@ fn save_new_plan(buf: &[u8]) -> Result<(), Box<Error>> {
     let mut file = File::create(path)?;
     file.write_all(buf)?;
     
-    let ts_path = app_root(AppDataType::UserConfig, &APP_INFO)?.join("timestamp");
+    let ts_path = app_root(AppDataType::UserData, &APP_INFO)?.join("timestamp");
     let mut ts_file = File::create(ts_path)?;
     ts_file.write_all(timestamp.as_bytes())?;
 
