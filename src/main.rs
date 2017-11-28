@@ -13,10 +13,6 @@ const URL: &'static str = "http://plany.wel.wat.edu.pl/lato/E7Q2S1.htm";
 const APP_INFO: AppInfo = AppInfo { name: "plan-sync", author: "Shadlock0133" }; 
 
 fn main() {
-    run().unwrap();
-}
-
-fn run() -> Result<(), Box<Error>> {
     let new_plan = get_new_plan().expect("Network error");
     let cached_plan = get_cached_timestamp()
         .and_then(|timestamp| {
@@ -26,7 +22,7 @@ fn run() -> Result<(), Box<Error>> {
         Ok(cached_plan) => {
             if &cached_plan == &new_plan {
                 println!("Files equal, nothing to do.");
-                return Ok(());
+                return;
             } else {
                 println!("Files not equal, caching new.");
             }
@@ -35,8 +31,7 @@ fn run() -> Result<(), Box<Error>> {
             println!("No old timestamp, creating new");
         }
     }
-    save_new_plan(&new_plan)?;
-    Ok(())
+    save_new_plan(&new_plan).expect("File saving error");
 }
 
 fn get_cached_timestamp() -> Result<String, Box<Error>> {
