@@ -8,7 +8,7 @@ extern crate webbrowser;
 
 use app_dirs::{app_root, AppDataType, AppInfo};
 use chrono::Local;
-use clap::SubCommand;
+use clap::{Arg, SubCommand};
 use failure::Error;
 
 use std::fs::File;
@@ -23,7 +23,9 @@ const APP_INFO: AppInfo = AppInfo {
 fn main() {
     let matches = app_from_crate!()
         .subcommand(
-            SubCommand::with_name("add").about("Add new website to cache"),
+            SubCommand::with_name("add")
+                .about("Add new website to cache")
+                .arg(Arg::with_name("url").value_name("URL").required(true)),
         )
         .subcommand(
             SubCommand::with_name("update")
